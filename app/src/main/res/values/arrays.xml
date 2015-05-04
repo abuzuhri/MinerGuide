@@ -1,0 +1,21 @@
+<resources>
+
+    <string-array name="toolbar_spinner">
+        <item>@string/spinner_all</item>
+        <item>@string/ic_drawer_achievements</item>
+        <item>@string/ic_drawer_biomes</item>
+        <item>@string/ic_drawer_structures</item>
+        <item>@string/ic_drawer_blocks</item>
+        <item>@string/ic_drawer_mobs</item>
+        <item>@string/ic_drawer_potions</item>
+        <item>@string/ic_drawer_redstone</item>
+    </string-array>
+
+
+    <array name="indicator_colors">
+        <item>@color/indicator_1</item>
+        <item>@color/indicator_2</item>
+        <item>@color/indicator_3</item>
+        <item>@color/indicator_4</item>
+    </array>
+</resources>

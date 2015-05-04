@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal"
+    android:id="@+id/furnace_layout" android:background="#ffc6c6c6"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5.0dip"
+    android:layout_marginBottom="5.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageButton android:id="@+id/Item0" android:padding="7dp" android:scaleType="fitCenter" android:adjustViewBounds="true" android:background="@drawable/itembutton" android:layout_width="54.0dip" android:layout_height="54.0dip" />
+    <ImageView android:layout_gravity="center_horizontal" android:layout_width="54.0dip" android:layout_height="54.0dip" android:src="@drawable/furnace_flame" />
+    <ImageButton android:id="@+id/Item1" android:padding="7dp" android:scaleType="fitCenter" android:adjustViewBounds="true" android:background="@drawable/itembutton" android:layout_width="54.0dip" android:layout_height="54.0dip" android:layout_margin="0.0px" />
+</LinearLayout>
