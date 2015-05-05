@@ -11,6 +11,8 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.google.gson.Gson;
+import com.minergame.minerguide.utils.AppConstant;
 import com.minergame.minerguide.utils.AppLog;
 
 import java.util.UUID;
@@ -34,12 +36,11 @@ public class GooglPlusLogin implements SocialNetwork
     private OnLoginListener lsnr;
     private static final int REQUEST_AUTH = UUID.randomUUID().hashCode() & 0xFFFF;
     private static final String SAVE_STATE_KEY_IS_CONNECTED = "GooglePlusSocialNetwork.SAVE_STATE_KEY_OAUTH_TOKEN";
-    private static final String SHARED_PREFERENCES_NAME = "social_networks";
 
 
     public GooglPlusLogin(final Activity activity){
         this.activity=activity;
-        mSharedPreferences = activity.getSharedPreferences(SHARED_PREFERENCES_NAME, activity.MODE_PRIVATE);
+        mSharedPreferences = activity.getSharedPreferences(activity.getPackageName(), activity.MODE_PRIVATE);
         mGoogleApiClient = new GoogleApiClient.Builder(activity)
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks(){
 
@@ -93,6 +94,7 @@ public class GooglPlusLogin implements SocialNetwork
         mConnectRequested = false;
 
         mSharedPreferences.edit().remove(SAVE_STATE_KEY_IS_CONNECTED).commit();
+        mSharedPreferences.edit().remove(AppConstant.SharedPreferenceNames.SocialUser).commit();
         if (mGoogleApiClient.isConnected()) {
             Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
             mGoogleApiClient.disconnect();
@@ -165,6 +167,10 @@ public class GooglPlusLogin implements SocialNetwork
                 user.name=currentPerson.getDisplayName();
                 user.email=email;
                 user.id=currentPerson.getId();
+
+                Gson gson = new Gson();
+                String json = gson.toJson(user);
+                mSharedPreferences.edit().putString(AppConstant.SharedPreferenceNames.SocialUser,json).commit();
 
                 lsnr.onSuccess(user);
             }

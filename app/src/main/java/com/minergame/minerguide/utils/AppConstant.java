@@ -26,4 +26,11 @@ public class AppConstant {
         }
     }
 
+
+    public  static class SharedPreferenceNames{
+        public static String SocialUser="SocialUser";
+    }
+
+
+
 }

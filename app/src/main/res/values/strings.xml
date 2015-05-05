@@ -2,8 +2,8 @@
     <string name="app_name">minerguide</string>
     <string name="facebook_app_id">555244347948254</string>
 
-    <string name="gcm_project_number">825312416502</string>
-    <string name="gcm_project_key">AIzaSyBvm_sZlxtIqtoNOWt34Ks8MIwwYkc_pa0</string>
+    <string name="gcm_project_number">976246165656</string>
+    <string name="gcm_project_key">AIzaSyDDF7GrgwgVkuzf0ODZuZe1ILln4HGQKMg</string>
 
     <string name="fb_btn_login">Sign in with Facebook</string>
     <string name="gp_btn_login">Sign in with Google</string>

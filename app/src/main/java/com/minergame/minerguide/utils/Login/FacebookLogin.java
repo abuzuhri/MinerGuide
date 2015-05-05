@@ -3,6 +3,7 @@ package com.minergame.minerguide.utils.Login;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -18,6 +19,8 @@ import com.facebook.GraphRequestAsyncTask;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.gson.Gson;
+import com.minergame.minerguide.utils.AppConstant;
 import com.minergame.minerguide.utils.AppLog;
 
 import org.json.JSONObject;
@@ -30,11 +33,13 @@ import java.util.Arrays;
 public class FacebookLogin implements SocialNetwork {
 
     private Activity activity;
+    protected SharedPreferences mSharedPreferences;
     public CallbackManager callbackManager;
 
 
     public FacebookLogin(Activity activity){
         this.activity=activity;
+        mSharedPreferences = activity.getSharedPreferences(activity.getPackageName(), activity.MODE_PRIVATE);
     }
 
     public boolean isLoggedIn(){
@@ -47,7 +52,9 @@ public class FacebookLogin implements SocialNetwork {
 
     public  void Logout(){
         FacebookSdk.sdkInitialize(activity.getApplicationContext());
+        mSharedPreferences.edit().remove(AppConstant.SharedPreferenceNames.SocialUser).commit();
         LoginManager.getInstance().logOut();
+
     }
 
     public void Login(final OnLoginListener lsnr)
@@ -68,7 +75,13 @@ public class FacebookLogin implements SocialNetwork {
                                 fbUser.email=user.optString("email");
                                 fbUser.name=user.optString("name");
                                 fbUser.id=user.optString("id");
+                                fbUser.avatarURL="http://graph.facebook.com/" + fbUser.id + "/picture?type=large";
                                 fbUser.network=SocialUser.NetworkType.FACEBOOK;
+
+                                Gson gson = new Gson();
+                                String json = gson.toJson(fbUser);
+                                mSharedPreferences.edit().putString(AppConstant.SharedPreferenceNames.SocialUser,json).commit();
+
                                 lsnr.onSuccess(fbUser);
                             }
                         }).executeAsync();

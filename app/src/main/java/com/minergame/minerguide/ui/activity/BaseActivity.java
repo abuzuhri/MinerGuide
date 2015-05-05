@@ -1,5 +1,6 @@
 package com.minergame.minerguide.ui.activity;
 
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
+import com.google.gson.Gson;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
@@ -34,6 +36,7 @@ import com.minergame.minerguide.ui.fragment.SettingFragment;
 import com.minergame.minerguide.utils.AppAction;
 import com.minergame.minerguide.utils.AppConstant;
 import com.minergame.minerguide.utils.AppLog;
+import com.minergame.minerguide.utils.Login.SocialUser;
 import com.minergame.minerguide.utils.fonts.MinecraftFont;
 
 import java.lang.reflect.Field;
@@ -144,12 +147,19 @@ public class BaseActivity extends ActionBarActivity {
     }
 
     protected void CreateDrawer(final Toolbar toolbar){
+
+        SharedPreferences mSharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = mSharedPreferences.getString(AppConstant.SharedPreferenceNames.SocialUser, "");
+        SocialUser obj = gson.fromJson(json, SocialUser.class);
+
+
         // Create the AccountHeader
         AccountHeader.Result headerResult = new AccountHeader()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.headergreen)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile))
+                        new ProfileDrawerItem().withName(obj.name).withEmail(obj.email).withIcon(getResources().getDrawable(R.drawable.profile))
                 )
                 .build();
 
@@ -175,6 +185,7 @@ public class BaseActivity extends ActionBarActivity {
                         new PrimaryDrawerItem().withName(R.string.ic_drawer_favorites).withIdentifier(AppConstant.AppDrawer.Favorites.id).withIcon(GoogleMaterial.Icon.gmd_favorite).withBadge("99"),
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName(R.string.ic_drawer_settings).withIdentifier(AppConstant.AppDrawer.Settings.id).withIcon(GoogleMaterial.Icon.gmd_settings)
+
                 )
                 .withSelectedItem(0)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
