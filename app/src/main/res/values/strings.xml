@@ -14,13 +14,11 @@
     <string name="server_unregistered">server_unregistered</string>
     <string name="server_unregister_error">server_unregister_error</string>
 
-
-    <string name="login_activity_info_text">  We do not post anything to Facebook or google plus</string>
-
+    <string name="login_activity_info_text">We do not post anything to Facebook or google plus</string>
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
-
     <string name="spinner_all">All</string>
+
     <!--ic_drawer-->
     <string name="ic_drawer_home">Home</string>
     <string name="ic_drawer_all">All</string>
@@ -35,8 +33,6 @@
     <string name="ic_drawer_settings">Settings</string>
     <string name="ic_drawer_favorites">Favorites</string>
     <string name="ic_drawer_chat">Chat</string>
-
-
     <!-- /ic_drawer-->
 
     <string name="chat_btn_send">Send</string>
