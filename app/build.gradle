@@ -50,6 +50,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:+'
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
     compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.google.apis:google-api-services-youtube:v3-rev107-1.18.0-rc'
     compile('com.mikepenz.materialdrawer:library:2.7.9@aar') {
         transitive = true
     }
