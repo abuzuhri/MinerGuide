@@ -26,7 +26,9 @@ import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.minergame.minerguide.R;
 import com.minergame.minerguide.application.OverridePendingUtil;
@@ -154,12 +156,15 @@ public class BaseActivity extends ActionBarActivity {
         SocialUser obj = gson.fromJson(json, SocialUser.class);
 
 
+        final IProfile profile = new ProfileDrawerItem().withName(obj.name).withEmail(obj.email).withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460");
+
         // Create the AccountHeader
         AccountHeader.Result headerResult = new AccountHeader()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.headergreen)
                 .addProfiles(
-                        new ProfileDrawerItem().withName(obj.name).withEmail(obj.email).withIcon(getResources().getDrawable(R.drawable.profile))
+                        new ProfileDrawerItem().withName(obj.name).withEmail(obj.email).withIcon(obj.avatarURL),
+                        profile
                 )
                 .build();
 
@@ -181,8 +186,9 @@ public class BaseActivity extends ActionBarActivity {
                         new PrimaryDrawerItem().withName(R.string.ic_drawer_potions).withIdentifier(AppConstant.AppDrawer.Potions.id).withIcon(MinecraftFont.Icon.ic_potions).withBadge("99"),
                         new PrimaryDrawerItem().withName(R.string.ic_drawer_redstone).withIdentifier(AppConstant.AppDrawer.Redsone.id).withIcon(MinecraftFont.Icon.ic_redstone).withBadge("99"),
                         new PrimaryDrawerItem().withName(R.string.ic_drawer_achievements).withIdentifier(AppConstant.AppDrawer.Achievements.id).withIcon(MinecraftFont.Icon.ic_achievements).withBadge("99"),
-                        new PrimaryDrawerItem().withName(R.string.ic_drawer_chat).withIdentifier(AppConstant.AppDrawer.Chat.id).withIcon(MinecraftFont.Icon.ic_chat).withBadge("99"),
+                        //new PrimaryDrawerItem().withName(R.string.ic_drawer_chat).withIdentifier(AppConstant.AppDrawer.Chat.id).withIcon(MinecraftFont.Icon.ic_chat).withBadge("99"),
                         new PrimaryDrawerItem().withName(R.string.ic_drawer_favorites).withIdentifier(AppConstant.AppDrawer.Favorites.id).withIcon(GoogleMaterial.Icon.gmd_favorite).withBadge("99"),
+                        new SwitchDrawerItem().withName(R.string.ic_drawer_chat).withIdentifier(AppConstant.AppDrawer.Achievements.id).withIcon(MinecraftFont.Icon.ic_chat).withChecked(true),//.withOnCheckedChangeListener(onCheckedChangeListener),
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName(R.string.ic_drawer_settings).withIdentifier(AppConstant.AppDrawer.Settings.id).withIcon(GoogleMaterial.Icon.gmd_settings)
 
