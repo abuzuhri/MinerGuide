@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -19,6 +21,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.minergame.minerguide.R;
+import com.minergame.minerguide.application.myApplication;
 import com.minergame.minerguide.db.Entity.Message;
 import com.minergame.minerguide.ui.activity.ChatActivity;
 import com.minergame.minerguide.utils.AppLog;
@@ -78,7 +81,7 @@ public class ChatListener  {
                 String name=extras.getString("name");
                 AppLog.i("name ="+name);
 
-                ReceiveIntentMsg(context,intent);
+                ReceiveIntentMsg(context, intent);
 
             }
         }
@@ -106,7 +109,7 @@ public class ChatListener  {
                 sendRegistrationIdToBackendInBackground(new Listener.DoWork() {
                     @Override
                     public void OnFinish() {
-                        isConnectedToChat=true;
+                        isConnectedToChat = true;
                         ichat.onConnect();
                     }
                 });
@@ -279,37 +282,50 @@ public class ChatListener  {
         asyncTask.execute();
     }
 
+
+    private static boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager  = (ConnectivityManager) myApplication.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
     private static String post(String endpoint, Map<String, String> params){
-        AppLog.i("endpoint== >"+endpoint);
-        OkHttpClient client = new OkHttpClient();
 
-        FormEncodingBuilder formBodyBuilder = new FormEncodingBuilder();
-        Iterator<Map.Entry<String, String>> iterator = params.entrySet().iterator();
-        // constructs the POST body using the parameters
-        while (iterator.hasNext()) {
-            Map.Entry<String, String> param = iterator.next();
-            formBodyBuilder.add(param.getKey(),param.getValue());
+        if(isNetworkAvailable()) {
+            AppLog.i("endpoint== >" + endpoint);
+            OkHttpClient client = new OkHttpClient();
+
+            FormEncodingBuilder formBodyBuilder = new FormEncodingBuilder();
+            Iterator<Map.Entry<String, String>> iterator = params.entrySet().iterator();
+            // constructs the POST body using the parameters
+            while (iterator.hasNext()) {
+                Map.Entry<String, String> param = iterator.next();
+                formBodyBuilder.add(param.getKey(), param.getValue());
+            }
+
+            RequestBody formBody = formBodyBuilder.build();
+
+            Request request = new Request.Builder()
+                    .url(endpoint)
+                    .post(formBody)
+                    .build();
+
+
+            try {
+                Response response = client.newCall(request).execute();
+                String str = response.body().string();
+                AppLog.i("response.body().string(); == >" + str);
+
+                return str;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "";
+        }else{
+
+            return "";
         }
-
-        RequestBody formBody=formBodyBuilder.build();
-
-        Request request = new Request.Builder()
-                .url(endpoint)
-                .post(formBody)
-                .build();
-
-
-        try {
-            Response response = client.newCall(request).execute();
-            String str=response.body().string();
-            AppLog.i("response.body().string(); == >"+str );
-
-            return str;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
 
     }
 

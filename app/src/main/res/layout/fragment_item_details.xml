@@ -110,6 +110,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignBottom="@id/header"
         android:layout_marginRight="20dp"
+        android:onClick="ViewClicked"
         app:fab_icon="@drawable/ic_local_movies_white_24dp"
         app:fab_colorNormal="@color/colorAccent"
         app:fab_colorPressed="@color/colorAccentDark"

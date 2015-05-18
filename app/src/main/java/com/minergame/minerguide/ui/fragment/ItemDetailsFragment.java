@@ -1,6 +1,8 @@
 package com.minergame.minerguide.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bluejamesbond.text.DocumentView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -75,22 +78,37 @@ public class ItemDetailsFragment extends BaseFragment {
         objectName=(TextView)rootView.findViewById(R.id.objectName);
         objectID=(TextView)rootView.findViewById(R.id.objectID);
 
-        ViewTreeObserver vto = fb.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if(!isViewInited) {
-                    int width = fb.getWidth();
-                    RelativeLayout.LayoutParams params1 = (RelativeLayout.LayoutParams) fb.getLayoutParams();
-                    AppLog.i("ne width ==>" + width);
-                    AppLog.i("ne (width/2)*-1 ==>" + (width / 2) * -1);
 
-                    params1.setMargins(0, 0, px(20), (width / 2) * -1);
-                    fb.setLayoutParams(params1);
-                    isViewInited = true;
+
+        if(objectTbl.YouTubeVideo!=null && objectTbl.YouTubeVideo!="") {
+            fb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watchv=" + objectTbl.YouTubeVideo));
+                    getActivity().startActivity(intent);
                 }
-            }
-        });
+            });
+
+
+            ViewTreeObserver vto = fb.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (!isViewInited) {
+                        int width = fb.getWidth();
+                        RelativeLayout.LayoutParams params1 = (RelativeLayout.LayoutParams) fb.getLayoutParams();
+                        AppLog.i("ne width ==>" + width);
+                        AppLog.i("ne (width/2)*-1 ==>" + (width / 2) * -1);
+
+                        params1.setMargins(0, 0, px(20), (width / 2) * -1);
+                        fb.setLayoutParams(params1);
+                        isViewInited = true;
+                    }
+                }
+            });
+        }else{
+            fb.setVisibility(View.GONE);
+        }
 
         String extnsion=".png";
         if(objectTbl.Category.equals("Biome"))
@@ -135,6 +153,7 @@ public class ItemDetailsFragment extends BaseFragment {
         renderBrewing(inflater,rootView);
         return rootView;
     }
+
 
     private void renderBrewing(LayoutInflater inflater,View root)
     {
