@@ -1,6 +1,7 @@
 package com.minergame.minerguide.ui.fragment;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +33,8 @@ import com.minergame.minerguide.db.Entity.RecipeSmelting;
 import com.minergame.minerguide.ui.activity.OneFragmentActivity;
 import com.minergame.minerguide.utils.AppAction;
 import com.minergame.minerguide.utils.AppLog;
+import com.minergame.minerguide.utils.IntentUtils;
+import com.minergame.minerguide.utils.Utility;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,12 +83,19 @@ public class ItemDetailsFragment extends BaseFragment {
 
 
 
-        if(objectTbl.YouTubeVideo!=null && objectTbl.YouTubeVideo!="") {
+        if(objectTbl.YouTubeVideo!=null && !objectTbl.YouTubeVideo.equals("") && objectTbl.YouTubeVideo.length() > 3) {
             fb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watchv=" + objectTbl.YouTubeVideo));
-                    getActivity().startActivity(intent);
+                    String youtubelink="https://www.youtube.com/watch?v=" + objectTbl.YouTubeVideo;
+                    AppLog.i("objectTbl.YouTubeVideo.length() ==> "+objectTbl.YouTubeVideo.length());
+                    AppLog.i("objectTbl.YouTubeVideo ==> "+objectTbl.YouTubeVideo);
+                    //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(youtubelink));
+                    //getActivity().startActivity(intent);
+                    PackageManager pm = getActivity().getPackageManager();
+                    Intent intent= IntentUtils.newYouTubeIntent(pm, objectTbl.YouTubeVideo);
+
+                    AppAction.OpenActivityIntent(getActivity(), intent);
                 }
             });
 
