@@ -1,5 +1,6 @@
 package com.minergame.minerguide.ui.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.widget.Toast;
@@ -10,6 +11,7 @@ import com.minergame.minerguide.R;
 import com.minergame.minerguide.ui.activity.SplashActivity;
 import com.minergame.minerguide.utils.AppAction;
 import com.minergame.minerguide.utils.AppLog;
+import com.minergame.minerguide.utils.DialogUtils;
 import com.minergame.minerguide.utils.Login.FacebookLogin;
 import com.minergame.minerguide.utils.Login.GooglPlusLogin;
 
@@ -47,7 +49,10 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
                 preference.setOnPreferenceClickListener(this);
         }
 
-/*
+    }
+
+    private  void LogOut(){
+
         FacebookLogin fbNetwork=new FacebookLogin(getActivity());
         fbNetwork.Logout();
 
@@ -56,8 +61,6 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
 
         AppAction.OpenActivity(getActivity(), SplashActivity.class);
         getActivity().finish();
-
-  */
     }
 
     @Override
@@ -68,7 +71,15 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
 
         if(key.equals("logout"))
         {
+            DialogUtils.OkDialog(getActivity(),getString(R.string.user_logout_clear_data),getString(R.string.user_logout_clear_data_summary), new  DialogInterface.OnClickListener(){
 
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    LogOut();
+
+                }
+            });
         }
         return true;
     }

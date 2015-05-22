@@ -37,13 +37,19 @@
 
     <string name="chat_btn_send">Send</string>
 
+    <!-- Dialog  -->
+    <string name="dialog_ok">Ok</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
 
-
-
-    <string name="basic_setting_category">Basic Setting</string>
+    <!-- Settings -->
+    <string name="basic_setting_category">Basic settings</string>
 
     <string name="user_logout_preference">Log Out</string>
     <string name="user_logout_preference_summary">Log out current user</string>
+    <string name="user_logout_clear_data">Clear user data?</string>
+    <string name="user_logout_clear_data_summary">You will have to re-connect your account.</string>
+
 
     <string name="original_category">Original Category</string>
     <string name="original_preference">Original Preference</string>
