@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <PreferenceCategory android:title="@string/basic_setting_category">
+
+    <Preference
+        android:key="logout"
+        android:title="@string/user_logout_preference"
+        android:summary="@string/user_logout_preference_summary"
+        android:enabled="true"
+        />
+    <Preference
+        android:key="@string/original_preference"
+        android:title="@string/original_preference"
+        android:summary="@string/original_summary_with_icon"
+        android:icon="@mipmap/ic_launcher"
+        android:dependency="@string/original_checkbox_key"
+        />
+    <CheckBoxPreference
+        android:key="@string/original_checkbox_key"
+        android:title="@string/original_checkbox_preference"
+        android:summaryOn="@string/original_checkbox_summary_on"
+        android:summaryOff="@string/original_checkbox_summary_off"
+        android:disableDependentsState="true"
+        />
+    <SwitchPreference
+        android:key="@string/original_switch_preference"
+        android:title="@string/original_switch_preference"
+        android:summaryOn="@string/original_switch_preference_on"
+        android:summaryOff="@string/original_switch_preference_off"
+        android:enabled="true"
+        />
+  </PreferenceCategory>
+
+</PreferenceScreen>

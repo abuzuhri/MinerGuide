@@ -26,7 +26,6 @@ import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
@@ -220,6 +219,8 @@ public class BaseActivity extends ActionBarActivity {
         AppLog.i("position=> " + filter);
 
 
+        SetToolbarShadow();
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
 
         if (filter == AppConstant.AppDrawer.Home.id) {
@@ -247,8 +248,11 @@ public class BaseActivity extends ActionBarActivity {
             fragment = new ItemListFragment();
             //args.putString(TabFragment.FRAGMENT, SemesterFragment.class.getName());
         }else if (filter == AppConstant.AppDrawer.Settings.id) {
-            fragment = new SettingFragment();
-            //args.putString(TabFragment.FRAGMENT, YearsFragment.class.getName());
+
+            //PreferenceFragment setting= new SettingFragment();
+            //fragmentManager.beginTransaction().add(android.R.id.content, setting).commit();
+            fragment=new SettingFragment();
+
         }else if (filter == AppConstant.AppDrawer.Chat.id) {
             //fragment = new ChatFragment();
             AppAction.OpenActivity(this,ChatActivity.class);
@@ -261,10 +265,11 @@ public class BaseActivity extends ActionBarActivity {
 
         if (fragment != null) {
             // Insert the fragment by replacing any existing fragment
-            FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+
+
         }
-        SetToolbarShadow();
+
     }
 
     public void SetupToolbarShadow(){

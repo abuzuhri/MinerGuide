@@ -8,8 +8,10 @@ import android.widget.ImageView;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
+import com.crashlytics.android.Crashlytics;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.squareup.picasso.Picasso;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by Tareq on 03/21/2015.
@@ -21,6 +23,7 @@ public class myApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         mContext = this;
         initializeDB();
         InitImageLoader();
