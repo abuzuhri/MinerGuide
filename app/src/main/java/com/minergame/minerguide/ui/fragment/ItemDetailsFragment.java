@@ -137,7 +137,11 @@ public class ItemDetailsFragment extends BaseFragment {
         }
 
         objectName.setText(objectTbl.Name);
-        objectID.setText("ID: "+objectTbl.getId()+"");
+        String dec=objectTbl.Dec;
+        if(dec!=null)
+            dec=dec.replace("_",":");
+
+        objectID.setText("ID: "+ dec   +"");
 
 
         if(objectTbl.Informations()!=null && objectTbl.Informations().size() >0){

@@ -15,6 +15,9 @@ public class ObjectTbl extends BaseEntity {
     @Column(name = "name")
     public String Name;
 
+    @Column(name = "dec")
+    public String Dec;
+
     @Column(name = "decription")
     public String Decription;
 

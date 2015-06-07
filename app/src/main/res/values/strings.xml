@@ -51,6 +51,23 @@
     <string name="user_logout_clear_data_summary">You will have to re-connect your account.</string>
 
 
+    <string name="notification_category">Notifications</string>
+
+    <string name="notification_chat">Chat Message</string>
+    <string name="notification_chat_summary">Notify when new chat message received.</string>
+    <string name="notification_add_new_movies">Movies updated</string>
+    <string name="notification_add_new_movies_summary">Notify when app update movies.</string>
+
+
+
+    <string name="app_details_category">App Details</string>
+    <string name="app_details_rate_app">Rate this app</string>
+    <string name="app_details_rate_app_summary">It would be great if you took a moment to rate it.</string>
+    <string name="app_details_version_name">Version</string>
+    <string name="app_details_version_number">1.01-release</string>
+
+    <!-- End Settings -->
+
     <string name="original_category">Original Category</string>
     <string name="original_preference">Original Preference</string>
     <string name="original_checkbox_preference">Original CheckBox Preference</string>

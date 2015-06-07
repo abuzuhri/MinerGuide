@@ -22,7 +22,9 @@ import com.google.gson.Gson;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
@@ -56,7 +58,7 @@ public class BaseActivity extends ActionBarActivity {
     protected View searchContainer;
     protected EditText toolbarSearchView;
     protected ImageView searchClearButton;
-    protected Drawer.Result result;
+    protected Drawer result;
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
@@ -158,7 +160,7 @@ public class BaseActivity extends ActionBarActivity {
         final IProfile profile = new ProfileDrawerItem().withName(obj.name).withEmail(obj.email).withIcon(obj.avatarURL);
 
         // Create the AccountHeader
-        AccountHeader.Result headerResult = new AccountHeader()
+        AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.headergreen)
                 .addProfiles(
@@ -171,7 +173,7 @@ public class BaseActivity extends ActionBarActivity {
         //new Drawer().withActivity(this).build();
         //IconicsDrawable(this, getResources().getDrawable(R.drawable.ic_drawer_mobs)
         //        .setIcon(new IconicsDrawable(this, getResources().getDrawable(R.drawable.ic_drawer_mobs))
-        result = new Drawer()
+        result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withAccountHeader(headerResult)
@@ -194,7 +196,7 @@ public class BaseActivity extends ActionBarActivity {
                 .withSelectedItem(0)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem drawerItem) {
+                    public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
                         if (drawerItem != null) {
                             if (drawerItem instanceof Nameable) {
                                 if(drawerItem.getIdentifier()!=AppConstant.AppDrawer.Chat.id)
@@ -203,8 +205,8 @@ public class BaseActivity extends ActionBarActivity {
                             }
 
                             selectItem(drawerItem.getIdentifier());
-
                         }
+                        return false;
                     }
                 })
                 .withActionBarDrawerToggleAnimated(true)
