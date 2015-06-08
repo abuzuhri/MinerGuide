@@ -9,6 +9,7 @@ public class AppConstant {
     public enum AppDrawer {
         Home(10),
         All(11),
+        Movies(15),
         Blocks(20),
         Mobs(30),
         Biomes(40),

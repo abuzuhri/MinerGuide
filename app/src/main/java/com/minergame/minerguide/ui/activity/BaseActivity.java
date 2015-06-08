@@ -35,6 +35,7 @@ import com.minergame.minerguide.R;
 import com.minergame.minerguide.application.OverridePendingUtil;
 import com.minergame.minerguide.ui.fragment.HomeFragment;
 import com.minergame.minerguide.ui.fragment.ItemListFragment;
+import com.minergame.minerguide.ui.fragment.MovieFragment;
 import com.minergame.minerguide.ui.fragment.SettingFragment;
 import com.minergame.minerguide.utils.AppAction;
 import com.minergame.minerguide.utils.AppConstant;
@@ -180,6 +181,7 @@ public class BaseActivity extends ActionBarActivity {
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.ic_drawer_home).withIdentifier(AppConstant.AppDrawer.Home.id).withIcon(FontAwesome.Icon.faw_dashboard),
                         new PrimaryDrawerItem().withName(R.string.ic_drawer_all).withIdentifier(AppConstant.AppDrawer.All.id).withIcon(MinecraftFont.Icon.ic_tool),
+                        new PrimaryDrawerItem().withName(R.string.ic_drawer_movies).withIdentifier(AppConstant.AppDrawer.Movies.id).withIcon(FontAwesome.Icon.faw_video_camera),
                         new PrimaryDrawerItem().withName(R.string.ic_drawer_blocks).withIdentifier(AppConstant.AppDrawer.Blocks.id).withIcon(MinecraftFont.Icon.ic_blocks).withBadge("99"),
                         new PrimaryDrawerItem().withName(R.string.ic_drawer_mobs).withIdentifier(AppConstant.AppDrawer.Mobs.id).withIcon(MinecraftFont.Icon.ic_mobs).withBadge("99"),
                         new PrimaryDrawerItem().withName(R.string.ic_drawer_biomes).withIdentifier(AppConstant.AppDrawer.Biomes.id).withIcon(MinecraftFont.Icon.ic_biomes).withBadge("99"),
@@ -229,6 +231,8 @@ public class BaseActivity extends ActionBarActivity {
             fragment = new HomeFragment();
         }else if (filter == AppConstant.AppDrawer.All.id) {
             fragment = new ItemListFragment();
+        }else if (filter == AppConstant.AppDrawer.Movies.id) {
+            fragment = new MovieFragment();
         }else if (filter == AppConstant.AppDrawer.Achievements.id) {
             fragment = new ItemListFragment();
         }else  if (filter == AppConstant.AppDrawer.Redsone.id) {
