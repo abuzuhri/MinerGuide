@@ -57,32 +57,35 @@ public class ItemAdapter  extends RecyclerView.Adapter<ItemViewHolder>  {
 
         // - get data from your itemsData at this position
         // - replace the contents of the view with that itemsData
-        ObjectTbl obj= mDataset.get(position);
+        ObjectTbl obj = mDataset.get(position);
 
         viewHolder.setID(obj.getId());
         viewHolder.itemDescription.setText(obj.Name);
-
-
-        String extnsion=".png";
-        if(obj.Category.equals("Biome"))
-            extnsion=".jpg";
-
-        String uri ="icons/icon_"+obj.getId()+extnsion;
-
-        if(obj.Informations()!=null && obj.Informations().size()>0){
-            Information info= obj.Informations().get(0);
-            viewHolder.duration.setText(info.Information);
-        }
-
-        String categoryText="";
-        categoryText=obj.Category;
-        if(obj.SubCategory!=null && !obj.SubCategory.equals("")){
-            categoryText=categoryText+" > "+ obj.SubCategory;
+        viewHolder.watched.setVisibility(View.INVISIBLE);
+        String categoryText = "";
+        categoryText = obj.Category;
+        if (obj.SubCategory != null && !obj.SubCategory.equals("")) {
+            categoryText = categoryText + " > " + obj.SubCategory;
         }
         viewHolder.categoty.setText(categoryText);
 
 
-        viewHolder.watched.setVisibility(View.INVISIBLE);
+        String extnsion = ".png";
+        if (obj.Category.equals("Biome"))
+            extnsion = ".jpg";
+
+        String uri = "icons/icon_" + obj.getId() + extnsion;
+
+        if (!obj.Category.equals("Video")) {
+            if (obj.Informations() != null && obj.Informations().size() > 0) {
+                Information info = obj.Informations().get(0);
+                viewHolder.duration.setText(info.Information);
+            }
+        } else {
+            //viewHolder.itemDescription.setMaxLines(2);
+            viewHolder.duration.setText(obj.Name);
+        }
+
         try {
             // get input stream
             InputStream ims = context.getAssets().open(uri);
@@ -96,7 +99,6 @@ public class ItemAdapter  extends RecyclerView.Adapter<ItemViewHolder>  {
 
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         if(mDataset != null) {

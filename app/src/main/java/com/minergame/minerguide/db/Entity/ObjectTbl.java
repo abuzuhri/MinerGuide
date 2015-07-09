@@ -18,9 +18,6 @@ public class ObjectTbl extends BaseEntity {
     @Column(name = "dec")
     public String Dec;
 
-    @Column(name = "decription")
-    public String Decription;
-
     @Column(name = "category")
     public String Category;
 
@@ -35,6 +32,16 @@ public class ObjectTbl extends BaseEntity {
 
     @Column(name = "visited")
     public Boolean Visited ;
+
+    @Column(name = "IdbUrl")
+    public String IdbUrl;
+    @Column(name = "IggUrl")
+    public String IggUrl;
+    @Column(name = "VdbUrl")
+    public String VdbUrl;
+    @Column(name = "VggUrl")
+    public String VggUrl;
+
 
     public List<ImageTbl> ImageTbls() {
         return getMany(ImageTbl.class, "object");

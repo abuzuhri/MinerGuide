@@ -141,19 +141,21 @@ public class ChatListener  {
 
         boolean isSelf=false;
 
+        if(message!=null && !message.equals("")) {
+
+            if (sessionId != null && sessionId.equals(pSsessionId))
+                isSelf = true;
 
 
-        if(sessionId!=null && sessionId.equals(pSsessionId))
-            isSelf=true;
+            Message msg = new Message(name, message, isSelf);
+            msg.save();
 
-        Message msg=new Message(name,message,isSelf);
-        msg.save();
+            if (ichat != null)
+                ichat.onMessage(msg);
 
-        if(ichat!=null)
-            ichat.onMessage(msg);
-
-        if(!msg.isSelf && !isAppRunning) {
-            sendNotification(context, name, message);
+            if (!msg.isSelf && !isAppRunning) {
+                sendNotification(context, name, message);
+            }
         }
     }
 

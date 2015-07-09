@@ -57,61 +57,65 @@ public class FacebookLogin implements SocialNetwork {
 
     }
 
-    public void Login(final OnLoginListener lsnr)
-    {
-        FacebookLogin.getFacebookHashKey(activity);
-        FacebookSdk.sdkInitialize(activity.getApplicationContext());
-        LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("public_profile,email"));
-        callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        final AccessToken accessToken = loginResult.getAccessToken();
-                        final SocialUser fbUser = new SocialUser();
-                        GraphRequestAsyncTask request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject user, GraphResponse graphResponse) {
-                                fbUser.email=user.optString("email");
-                                fbUser.name=user.optString("name");
-                                fbUser.id=user.optString("id");
-                                fbUser.avatarURL="http://graph.facebook.com/" + fbUser.id + "/picture?type=large";
-                                fbUser.network=SocialUser.NetworkType.FACEBOOK;
+    public void Login(final OnLoginListener lsnr) {
+        try {
+            FacebookLogin.getFacebookHashKey(activity);
+            FacebookSdk.sdkInitialize(activity.getApplicationContext());
+            LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("public_profile", "email"));
+            callbackManager = CallbackManager.Factory.create();
+            LoginManager.getInstance().registerCallback(callbackManager,
+                    new FacebookCallback<LoginResult>() {
+                        @Override
+                        public void onSuccess(LoginResult loginResult) {
+                            final AccessToken accessToken = loginResult.getAccessToken();
+                            final SocialUser fbUser = new SocialUser();
+                            GraphRequestAsyncTask request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                                @Override
+                                public void onCompleted(JSONObject user, GraphResponse graphResponse) {
+                                    fbUser.email = user.optString("email");
+                                    fbUser.name = user.optString("name");
+                                    fbUser.id = user.optString("id");
+                                    fbUser.avatarURL = "https://graph.facebook.com/\" + fbUser.id + \"/picture?width=300&height=300";
+                                    fbUser.network = SocialUser.NetworkType.FACEBOOK;
 
-                                Gson gson = new Gson();
-                                String json = gson.toJson(fbUser);
-                                mSharedPreferences.edit().putString(AppConstant.SharedPreferenceNames.SocialUser,json).commit();
+                                    Gson gson = new Gson();
+                                    String json = gson.toJson(fbUser);
+                                    mSharedPreferences.edit().putString(AppConstant.SharedPreferenceNames.SocialUser, json).commit();
 
-                                lsnr.onSuccess(fbUser);
+                                    lsnr.onSuccess(fbUser);
+                                }
+                            }).executeAsync();
+
+                            AppLog.i("LoginManager FacebookCallback onSuccess");
+                            if (loginResult.getAccessToken() != null) {
+                                AppLog.i("Access Token:: " + loginResult.getAccessToken());
+                                //facebookSuccess();
+
                             }
-                        }).executeAsync();
-
-                        AppLog.i( "LoginManager FacebookCallback onSuccess");
-                        if(loginResult.getAccessToken() != null) {
-                            AppLog.i( "Access Token:: " + loginResult.getAccessToken());
-                            //facebookSuccess();
-
+                            AppLog.i("onSuccess");
                         }
-                        AppLog.i("onSuccess");
-                    }
 
-                    @Override
-                    public void onCancel() {
-                        AppLog.i("onCancel");
-                        AppLog.i( "LoginManager FacebookCallback onCancel");
-                        // App code
-                        lsnr.onFail();
-                    }
+                        @Override
+                        public void onCancel() {
+                            AppLog.i("onCancel");
+                            AppLog.i("LoginManager FacebookCallback onCancel");
+                            // App code
+                            lsnr.onFail();
+                        }
 
-                    @Override
-                    public void onError(FacebookException exception) {
-                        // App code
-                        exception.printStackTrace();
-                        AppLog.i("onError");
-                        AppLog.i("LoginManager FacebookCallback onError");
-                        lsnr.onFail();
-                    }
-                });
+                        @Override
+                        public void onError(FacebookException exception) {
+                            // App code
+                            exception.printStackTrace();
+                            AppLog.i("onError");
+                            AppLog.i("LoginManager FacebookCallback onError");
+                            lsnr.onFail();
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+            lsnr.onFail();
+        }
     }
 
     @Override

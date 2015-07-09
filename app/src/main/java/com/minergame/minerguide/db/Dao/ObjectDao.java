@@ -33,6 +33,8 @@ public class ObjectDao extends BaseDao{
             categoryName=new String[] {"Mob"};
         }else if(MenuID== AppConstant.AppDrawer.Achievements.id){
             categoryName=new String[] {"Achievement"};
+        }else if(MenuID== AppConstant.AppDrawer.Movies.id){
+            categoryName=new String[] {"Video"};
         }else if(MenuID== AppConstant.AppDrawer.Biomes.id){
             categoryName=new String[] {"Biome"};
         }else if(MenuID== AppConstant.AppDrawer.Favorites.id){
@@ -42,6 +44,8 @@ public class ObjectDao extends BaseDao{
         }else if(MenuID== AppConstant.AppDrawer.Potions.id){
             return  getAllByMenu("Item","Potions");
         }
+
+
 
         long currentTimeInMillis= calendar.getTimeInMillis();
         return new Select()
@@ -53,7 +57,7 @@ public class ObjectDao extends BaseDao{
 
         return new Select()
                 .from(ObjectTbl.class)
-                .where("category =  ?",category).and("sub_category = ?",SubCategory)
+                .where("category =  ?", category).and("sub_category = ?", SubCategory)
                 .execute();
     }
     public List<ObjectTbl> getAll(){
@@ -83,8 +87,13 @@ public class ObjectDao extends BaseDao{
 
         return new Select()
                 .from(ObjectTbl.class)
-                .where("name like ?", search).or("category like  ?",search).or("sub_category like ?",search)
+                .where("name like ?", search).or("category like  ?", search).or("sub_category like ?", search)
                 .execute();
+    }
+
+
+    public  void  Save(ObjectTbl obj){
+        obj.save();
     }
 
 }

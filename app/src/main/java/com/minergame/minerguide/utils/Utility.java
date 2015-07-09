@@ -1,6 +1,7 @@
 package com.minergame.minerguide.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
 /**
@@ -20,5 +21,17 @@ public class Utility {
         }
         return installed;
     }
+
+    public static boolean getSharedPreferences(Context context,String Name,boolean defaultApp){
+        SharedPreferences localSharedPreferences = context.getSharedPreferences(context.getPackageName(), 0);
+        boolean isTrue= localSharedPreferences.getBoolean(Name, defaultApp);
+        return isTrue;
+    }
+    public static void setSharedPreferences(Context context,String Name,boolean defaultApp){
+        SharedPreferences localSharedPreferences = context.getSharedPreferences(context.getPackageName(), 0);
+        localSharedPreferences.edit().putBoolean(Name, defaultApp).commit();
+    }
+
+
 
 }

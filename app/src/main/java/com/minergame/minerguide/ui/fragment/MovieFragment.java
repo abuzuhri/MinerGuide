@@ -13,6 +13,7 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.minergame.minerguide.R;
+import com.minergame.minerguide.utils.AppAction;
 
 
 public class MovieFragment extends BaseFragment {
@@ -22,6 +23,9 @@ public class MovieFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+
+
     }
 
 
@@ -30,6 +34,7 @@ public class MovieFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_video_view, container, false);
+
 
         final VideoView videoView=(VideoView)rootView.findViewById(R.id.VideoView);
         String VideoURL="http://pass2you.com/0ilhechxgwu.webm";//"http://www.androidbegin.com/tutorial/AndroidCommercial.3gp";

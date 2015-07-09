@@ -10,7 +10,14 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
 import com.crashlytics.android.Crashlytics;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
+import com.minergame.minerguide.db.Entity.ImportVideo;
+import com.minergame.minerguide.db.Entity.ObjectTbl;
+import com.minergame.minerguide.utils.Utility;
 import com.squareup.picasso.Picasso;
+
+import java.util.Collection;
+import java.util.Iterator;
+
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -26,6 +33,7 @@ public class myApplication extends Application {
         Fabric.with(this, new Crashlytics());
         mContext = this;
         initializeDB();
+        AddVideo();
         InitImageLoader();
     }
 
@@ -38,6 +46,38 @@ public class myApplication extends Application {
         //configurationBuilder.addModelClasses(Test.class);
 
         ActiveAndroid.initialize(configurationBuilder.create());
+
+    }
+
+    private void AddVideo() {
+        String spName = "isFirstTime";
+        boolean isFirstTime = Utility.getSharedPreferences(mContext, spName, true);
+        if (isFirstTime) {
+            Utility.setSharedPreferences(mContext, spName, false);
+            Collection<ImportVideo> list = ImportVideo.getListFromFile(mContext);
+            Iterator itr1 = list.iterator();
+            while (itr1.hasNext()) {
+                ImportVideo vd = (ImportVideo) itr1.next();
+
+                ObjectTbl obj = new ObjectTbl();
+                obj.Name=vd.Name;
+                obj.Dec=vd.Vid;
+
+                obj.Visited=false;
+                obj.Favorite=false;
+
+                obj.IdbUrl=vd.IdbUrl;
+                obj.IggUrl=vd.IggUrl;
+                obj.VdbUrl=vd.VdbUrl;
+                obj.VggUrl=vd.VggUrl;
+
+
+                obj.Category="Video";
+                obj.SubCategory="Help";
+                obj.save();
+
+            }
+        }
     }
 
 

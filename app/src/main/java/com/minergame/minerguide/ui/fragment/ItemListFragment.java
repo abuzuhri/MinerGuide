@@ -13,6 +13,7 @@ import com.minergame.minerguide.R;
 import com.minergame.minerguide.db.Dao.ObjectDao;
 import com.minergame.minerguide.db.Entity.ObjectTbl;
 import com.minergame.minerguide.ui.activity.ChatActivity;
+import com.minergame.minerguide.ui.activity.SplashActivity;
 import com.minergame.minerguide.utils.AppAction;
 import com.minergame.minerguide.utils.AppLog;
 import com.minergame.minerguide.view.Adapter.ItemAdapter;
@@ -87,7 +88,14 @@ public class ItemListFragment extends BaseFragment {
         mAdapter = new ItemAdapter(objectList,getActivity(),new IClickCardView() {
             @Override
             public void onClick(View v, long ID) {
-                AppAction.OpenActivityWithFRAGMENT(getActivity(), ItemDetailsFragment.class.getName(), ID);
+                ObjectDao dao=new ObjectDao();
+                ObjectTbl obj=dao.getById(ID);
+
+                if(obj.Category.equals("Video"))
+                    AppAction.OpenVedioActivity(getActivity(), obj.VdbUrl);
+                else
+                    AppAction.OpenActivityWithFRAGMENT(getActivity(), ItemDetailsFragment.class.getName(), ID);
+
             }
         });
         mRecyclerView.setAdapter(mAdapter);

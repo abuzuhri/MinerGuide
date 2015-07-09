@@ -7,6 +7,7 @@ import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -48,7 +49,7 @@ import java.lang.reflect.Field;
 /**
  * Created by Tareq on 03/20/2015.
  */
-public class BaseActivity extends ActionBarActivity {
+public class BaseActivity extends AppCompatActivity {
 
     protected   Toolbar toolbar;
     public View shadowView;
@@ -232,7 +233,7 @@ public class BaseActivity extends ActionBarActivity {
         }else if (filter == AppConstant.AppDrawer.All.id) {
             fragment = new ItemListFragment();
         }else if (filter == AppConstant.AppDrawer.Movies.id) {
-            fragment = new MovieFragment();
+            fragment = new ItemListFragment();
         }else if (filter == AppConstant.AppDrawer.Achievements.id) {
             fragment = new ItemListFragment();
         }else  if (filter == AppConstant.AppDrawer.Redsone.id) {
@@ -309,18 +310,26 @@ public class BaseActivity extends ActionBarActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
+        try {
+            super.onResume();
 
-        // Logs 'install' and 'app activate' App Events.
-        AppEventsLogger.activateApp(this);
+            // Logs 'install' and 'app activate' App Events.
+            AppEventsLogger.activateApp(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
+        try {
+            super.onPause();
 
-        // Logs 'app deactivate' App Event.
-        AppEventsLogger.deactivateApp(this);
+            // Logs 'app deactivate' App Event.
+            AppEventsLogger.deactivateApp(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 }

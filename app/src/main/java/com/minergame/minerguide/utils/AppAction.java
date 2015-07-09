@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.minergame.minerguide.application.OverridePendingUtil;
 import com.minergame.minerguide.ui.activity.OneFragmentActivity;
+import com.minergame.minerguide.ui.activity.VideoPlayerActivity;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -20,6 +21,7 @@ public class AppAction {
         public static final String FRAGMENTEXTRA = "FRAGMENT";
         public static final String POSITION = "POSITION";
         public static final String MENUID = "MENUID";
+        public static final String URLEXTRA = "URLEXTRA";
 
 
     }
@@ -32,7 +34,7 @@ public class AppAction {
 
     public static void OpenActivity(Activity context,Class<?> cls){
         Intent intent = new Intent(context, cls);
-        OpenActivityIntent(context,intent);
+        OpenActivityIntent(context, intent);
     }
     public static void OpenActivityWithID(Activity context,Class<?> cls, Long ID){
         Intent intent = new Intent(context, cls);
@@ -66,5 +68,13 @@ public class AppAction {
 
     public static void DiaplayError(Activity activity, String msg){
         Crouton.makeText(activity, msg, Style.ALERT).show();
+    }
+
+    public static void OpenVedioActivity(Activity context, String url)
+    {
+        Intent intent = new Intent(context, VideoPlayerActivity.class);
+        if(url!=null)
+            intent.putExtra(EXTRA.URLEXTRA, url);
+        OpenActivityIntent(context,intent);
     }
 }
